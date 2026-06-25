@@ -7,6 +7,10 @@ from plotly.subplots import make_subplots
 import os, warnings
 warnings.filterwarnings('ignore')
 
+
+os.environ["KAGGLE_USERNAME"] = st.secrets["kaggle"]["username"]
+os.environ["KAGGLE_KEY"]      = st.secrets["kaggle"]["key"]
+
 # ─── Page Config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="CICIDS2017 – EDA Dashboard",
@@ -99,8 +103,6 @@ PLOTLY_LAYOUT = dict(
 @st.cache_data(show_spinner=False)
 def load_data():
     import kagglehub
-    os.environ["KAGGLE_USERNAME"] = st.secrets["kaggle"]["username"]
-    os.environ["KAGGLE_KEY"]      = st.secrets["kaggle"]["key"]
     path = kagglehub.dataset_download("elshewey/intrusion-detection-cicids2017")
     df = pd.read_csv(f'{path}/cicids2017_binary_balanced.csv')
 
